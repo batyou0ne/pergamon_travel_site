@@ -110,7 +110,7 @@ const PostItem = ({ post, onPostDeleted }) => {
 
                 <div className="post__overlay">
                     <div className="post__overlay-top">
-                        <div className="post__top-right-actions" style={{ display: 'flex', gap: '8px', marginLeft: 'auto' }}>
+                        <div className="post__top-left-actions" style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start', marginTop: post.locationName ? '40px' : '0' }}>
                             {post.badgeEarned && (
                                 <span className="post__badge" title="Verified Location Badge">
                                     {post.badgeEarned}
