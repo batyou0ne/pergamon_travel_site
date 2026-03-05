@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "../lib/api";
 import "./CreatePost.css";
@@ -12,12 +13,54 @@ const CreatePost = () => {
     const [imageBase64, setImageBase64] = useState(null);
     const [caption, setCaption] = useState("");
 
+    // Location Search State
+    const [locationInput, setLocationInput] = useState("");
+    const [locationResults, setLocationResults] = useState([]);
+    const [loadingLocation, setLoadingLocation] = useState(false);
+    const [selectedLocationName, setSelectedLocationName] = useState("");
+    const debounceTimer = useRef(null);
+
     // UI State
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
     const fileInputRef = useRef(null);
     const cameraInputRef = useRef(null);
+
+    // ─── Location Autocomplete Effect ──────────────────────────────────────────
+    useEffect(() => {
+        if (locationInput.length >= 3 && locationInput !== selectedLocationName) {
+            if (debounceTimer.current) clearTimeout(debounceTimer.current);
+            debounceTimer.current = setTimeout(fetchLocations, 500);
+        } else if (locationInput.length < 3) {
+            setLocationResults([]);
+        }
+    }, [locationInput, selectedLocationName]);
+
+    const fetchLocations = async () => {
+        if (locationInput.length < 2) return;
+        setLoadingLocation(true);
+        try {
+            const response = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(locationInput)}&layer=city&lang=en&limit=5`);
+            const data = await response.json();
+            const results = data.features.map(f => {
+                const { name, state, country } = f.properties;
+                return [name, state, country].filter(Boolean).join(", ");
+            });
+            setLocationResults(results);
+        } catch (err) {
+            console.error("Locations fetch error:", err);
+            setLocationResults([]);
+        } finally {
+            setLoadingLocation(false);
+        }
+    };
+
+    const handleLocationSelect = (loc) => {
+        setLocationInput(loc);
+        setSelectedLocationName(loc);
+        setLocationResults([]);
+    };
 
     // ─── Step 1: Handle Image Selection ────────────────────────────────────────
 
@@ -48,6 +91,7 @@ const CreatePost = () => {
             const payload = {
                 imageUrl: imageBase64,
                 caption,
+                locationName: selectedLocationName || locationInput // fallback to what they typed if not clicked
             };
 
             if (locationData && locationData.latitude && locationData.longitude) {
@@ -161,6 +205,34 @@ const CreatePost = () => {
                                 onChange={(e) => setCaption(e.target.value)}
                                 rows={4}
                             />
+                        </div>
+                        <div className="location-input-wrapper" style={{ position: 'relative', marginBottom: '16px' }}>
+                            <div className="search-bar" style={{ display: 'flex', alignItems: 'center', background: 'var(--surface-color)', borderRadius: 'var(--radius-full)', padding: '8px 16px', border: '1px solid var(--border-color)' }}>
+                                <MapPin size={18} style={{ color: 'var(--text-secondary)', marginRight: '8px' }} />
+                                <input
+                                    type="text"
+                                    placeholder="Where is this? (e.g. Colosseum, Rome)"
+                                    value={locationInput}
+                                    onChange={(e) => setLocationInput(e.target.value)}
+                                    style={{ flex: 1, background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none' }}
+                                />
+                                {loadingLocation && <span className="spinner-loader" style={{ width: '16px', height: '16px', borderTopColor: 'var(--accent-primary)' }}></span>}
+                            </div>
+
+                            {locationResults.length > 0 && (
+                                <div className="dropdown-results" style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: 'var(--surface-color)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', marginTop: '4px', zIndex: 10, boxShadow: 'var(--shadow-lg)' }}>
+                                    {locationResults.map((loc, i) => (
+                                        <div
+                                            key={i}
+                                            onClick={() => handleLocationSelect(loc)}
+                                            style={{ padding: '12px 16px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: i < locationResults.length - 1 ? '1px solid var(--border-color)' : 'none' }}
+                                        >
+                                            <MapPin size={14} style={{ color: 'var(--accent-primary)' }} />
+                                            <span>{loc}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         <button className="btn btn-primary w-full next-btn" onClick={() => setStep(3)}>
                             Next →

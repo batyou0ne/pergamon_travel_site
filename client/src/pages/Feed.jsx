@@ -99,14 +99,17 @@ const PostItem = ({ post, onPostDeleted }) => {
                     <div className="post__image" style={{ height: '300px', backgroundColor: '#e0e0e0' }} />
                 )}
 
+                <div className="post__always-visible-top" style={{ position: 'absolute', top: 16, left: 16, zIndex: 2, pointerEvents: 'none' }}>
+                    {post.locationName && (
+                        <div className="post__location" style={{ pointerEvents: 'auto' }}>
+                            <MapPin size={14} />
+                            <span>{post.locationName}</span>
+                        </div>
+                    )}
+                </div>
+
                 <div className="post__overlay">
                     <div className="post__overlay-top">
-                        {post.locationName && (
-                            <div className="post__location">
-                                <MapPin size={14} />
-                                <span>{post.locationName}</span>
-                            </div>
-                        )}
                         <div className="post__top-right-actions" style={{ display: 'flex', gap: '8px', marginLeft: 'auto' }}>
                             {post.badgeEarned && (
                                 <span className="post__badge" title="Verified Location Badge">
