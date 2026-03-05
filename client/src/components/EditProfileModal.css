@@ -1,0 +1,296 @@
+.edit-profile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.edit-profile-modal {
+    background: var(--bg-color);
+    width: 100%;
+    max-width: 500px;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow: hidden;
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.edit-profile__header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.edit-profile__content {
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ── Avatar Section ── */
+.edit-profile__avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.edit-profile__avatar-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.edit-profile__avatar-preview:hover {
+    transform: scale(1.05);
+}
+
+.edit-profile__avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.edit-profile__avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.edit-profile__avatar-preview:hover .edit-profile__avatar-overlay {
+    opacity: 1;
+}
+
+.edit-profile__avatar-hint {
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+/* ── Form Groups ── */
+.edit-profile__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-profile__form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.edit-profile__form-group input,
+.edit-profile__form-group textarea {
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.edit-profile__form-group input:focus,
+.edit-profile__form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(74, 44, 42, 0.1);
+}
+
+.edit-profile__form-group textarea {
+    resize: none;
+    height: 100px;
+}
+
+/* ── Autocomplete Containers ── */
+.edit-profile__autocomplete-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.autocomplete-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.autocomplete-wrapper input {
+    width: 100%;
+}
+
+.spinner-loader {
+    position: absolute;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.edit-profile__results-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #FFF;
+    /* Use pure white for high contrast dropdown */
+    border: 1.5px solid var(--accent-primary);
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    max-height: 220px;
+    overflow-y: auto;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.result-item {
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #F0F0F0;
+    transition: all 0.2s;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item:hover {
+    background: var(--surface-color);
+    color: var(--accent-primary);
+    padding-left: 20px;
+}
+
+.result-item span {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Selected Languages ── */
+.edit-profile__selected-langs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.lang-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.lang-tag svg {
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 0.1s;
+}
+
+.lang-tag svg:hover {
+    color: var(--accent-primary);
+}
+
+/* ── Tags Section ── */
+.edit-profile__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.tag-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tag-badge.active {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+/* ── Footer ── */
+.edit-profile__footer {
+    padding: 20px 24px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

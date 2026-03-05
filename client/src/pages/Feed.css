@@ -1,0 +1,296 @@
+.feed-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.feed__header {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Masonry Grid */
+.feed__posts {
+    column-count: 3;
+    column-gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .feed__posts {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .feed__posts {
+        column-count: 1;
+    }
+}
+
+/* ── Post Component ── */
+.post {
+    break-inside: avoid;
+    margin-bottom: 24px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    background-color: var(--surface-color);
+    border: none;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+    /* Removed transform */
+}
+
+.post:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.post__image-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.post__image {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* Overlay that darkens the bottom for text */
+.post__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    pointer-events: none;
+    /* Let clicks pass through except on specific buttons */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.post:hover .post__overlay {
+    opacity: 1;
+}
+
+.post__overlay-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.post__location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    pointer-events: auto;
+}
+
+.post__badge {
+    background-color: var(--accent-primary);
+    color: var(--bg-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.post__save-btn {
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s, transform 0.1s;
+    pointer-events: auto;
+    /* Needs to be clickable */
+}
+
+.post__save-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: scale(1.05);
+}
+
+.post__save-btn.saved {
+    background: #e60023;
+    /* Pinterest red */
+}
+
+.post__overlay-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: auto;
+}
+
+.post__user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.avatar-sm {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    background-color: var(--surface-color);
+    color: var(--text-primary);
+    text-shadow: none;
+}
+
+.post__user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.post__caption {
+    margin-top: 4px;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    font-family: var(--font-heading);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    /* Added for standard compatibility */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post__action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.post__action-btn span {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.post__action-btn:hover {
+    transform: scale(1.1);
+}
+
+.post__action-btn.liked {
+    color: #ff5252;
+}
+
+/* Comments Dropdown */
+.post__comments-dropdown {
+    padding: 16px;
+    background: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.post__comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+}
+
+.post__comment {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+.post__comment strong {
+    margin-right: 6px;
+    color: var(--text-primary);
+}
+
+.post__no-comments {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.post__comment-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.post__comment-form input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.post__comment-form input:focus {
+    border-color: var(--accent-primary);
+}
+
+.post__comment-form button {
+    background: var(--accent-primary);
+    color: var(--bg-color);
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.post__comment-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.close-comments-btn {
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.close-comments-btn:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}

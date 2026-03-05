@@ -1,0 +1,129 @@
+.trips__header {
+    padding: 40px 0 48px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.trips__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.trips__stat {
+    padding: 20px;
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.trips__stat-count {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.trips__stat-label {
+    font-size: 0.8rem;
+    color: var(--white-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+}
+
+.trips__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 60px;
+}
+
+.trip-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    border-radius: var(--radius-md);
+}
+
+.trip-card__icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white-faint);
+    border-radius: var(--radius-sm);
+}
+
+.trip-card__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.trip-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.trip-card__dest {
+    font-size: 0.8rem;
+    color: var(--white-dim);
+}
+
+.trip-card__title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trip-card__dates {
+    font-size: 0.85rem;
+    color: var(--teal-light);
+}
+
+.trip-card__notes {
+    font-size: 0.85rem;
+    color: var(--white-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trip-card__actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.trips__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 40px;
+    text-align: center;
+    gap: 12px;
+    color: var(--white-dim);
+    margin-top: 20px;
+}
+
+.trips__error {
+    background: rgba(230, 57, 70, 0.1);
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    color: #ff8a8a;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 24px;
+}

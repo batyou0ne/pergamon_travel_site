@@ -1,0 +1,151 @@
+.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 20px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.topnav__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+}
+
+.topnav__left,
+.topnav__right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.topnav__right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* Push both the actions group and logout to the far right */
+    gap: 32px;
+    /* Space between the [Post, Profile] group and [Logout] */
+}
+
+.topnav__actions-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    /* Space between Post and Profile */
+}
+
+.topnav__actions-group .new-post-btn {
+    margin-right: 0px;
+    /* Reset because we use gap now */
+}
+
+.topnav__center {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.topnav__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.topnav__logo .logo-icon {
+    color: var(--accent-primary);
+    display: flex;
+}
+
+.topnav__logo .logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    letter-spacing: -0.5px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.2s, transform 0.1s;
+    font-family: var(--font-heading);
+}
+
+.nav-item:hover {
+    color: var(--text-primary);
+}
+
+.nav-item:active {
+    transform: scale(0.95);
+}
+
+.nav-item.active {
+    color: var(--accent-primary);
+}
+
+.new-post-btn {
+    background-color: var(--accent-primary);
+    color: var(--bg-color);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+}
+
+.new-post-btn:hover {
+    color: var(--bg-color);
+    background-color: rgba(74, 44, 42, 0.85);
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.user-menu:hover {
+    transform: scale(1.05);
+}
+
+.user-menu .avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+.auth-links {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-sm {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none;
+    }
+
+    .topnav__center {
+        display: none;
+        /* Hide center links on mobile, rely on BottomNav */
+    }
+}

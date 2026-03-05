@@ -1,0 +1,111 @@
+.destinations__header {
+    padding: 100px 0 40px;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(74, 44, 42, 0.08) 0%, transparent 70%);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 48px;
+}
+
+.destinations__search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-radius: var(--radius-md);
+    max-width: 540px;
+    margin-top: 28px;
+    font-size: 1.1rem;
+}
+
+.destinations__search input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.destinations__search input::placeholder {
+    color: var(--text-secondary);
+}
+
+.destinations__clear {
+    background: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.destinations__clear:hover {
+    color: var(--text-primary);
+    background: rgba(74, 44, 42, 0.05);
+    /* var(--white-faint) equivalent */
+}
+
+.destinations__cats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.destinations__cat-btn {
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    background: rgba(74, 44, 42, 0.05);
+    color: var(--text-secondary);
+    border: 1px solid transparent;
+    transition: var(--transition);
+    text-transform: uppercase;
+}
+
+.destinations__cat-btn:hover,
+.destinations__cat-btn.active {
+    background: rgba(74, 44, 42, 0.1);
+    /* var(--teal-glow) equivalent */
+    color: var(--accent-primary);
+    border-color: rgba(74, 44, 42, 0.3);
+}
+
+.destinations__body {
+    padding-bottom: 80px;
+}
+
+.destinations__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.dest-card__rating-badge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    /* Gold equivalent */
+}
+
+.destinations__empty {
+    text-align: center;
+    padding: 80px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+}
