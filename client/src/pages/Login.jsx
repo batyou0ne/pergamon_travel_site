@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Landmark } from "lucide-react";
+import { Landmark, Mail, Lock, User as UserIcon } from "lucide-react";
 import "./Auth.css";
 
 const Login = () => {
@@ -32,7 +32,8 @@ const Login = () => {
             <div className="auth__bg" />
             <div className="auth__card glass animate-fade-up">
                 <div className="auth__logo">
-                    <Landmark size={28} /> Pergamon
+                    <Landmark size={32} strokeWidth={2.5} />
+                    <span>Pergamon</span>
                 </div>
                 <h1 className="auth__title">Welcome Back</h1>
                 <p className="auth__subtitle">Sign in to continue your adventure</p>
@@ -42,27 +43,33 @@ const Login = () => {
                 <form onSubmit={handleSubmit} className="auth__form">
                     <div className="form-group">
                         <label>Email Address</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleChange}
-                            placeholder="you@example.com"
-                            required
-                            autoComplete="email"
-                        />
+                        <div className="input-wrapper">
+                            <Mail className="input-icon" size={18} />
+                            <input
+                                type="email"
+                                name="email"
+                                value={form.email}
+                                onChange={handleChange}
+                                placeholder="you@example.com"
+                                required
+                                autoComplete="email"
+                            />
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            value={form.password}
-                            onChange={handleChange}
-                            placeholder="••••••••"
-                            required
-                            autoComplete="current-password"
-                        />
+                        <div className="input-wrapper">
+                            <Lock className="input-icon" size={18} />
+                            <input
+                                type="password"
+                                name="password"
+                                value={form.password}
+                                onChange={handleChange}
+                                placeholder="••••••••"
+                                required
+                                autoComplete="current-password"
+                            />
+                        </div>
                     </div>
                     <button type="submit" className="btn btn-primary auth__submit" disabled={loading}>
                         {loading ? "Signing in..." : "Sign In →"}

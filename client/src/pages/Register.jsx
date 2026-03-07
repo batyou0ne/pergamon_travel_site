@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Landmark } from "lucide-react";
+import { Landmark, Mail, Lock, User as UserIcon } from "lucide-react";
 import "./Auth.css";
 
 const Register = () => {
@@ -34,7 +34,8 @@ const Register = () => {
             <div className="auth__bg" />
             <div className="auth__card glass animate-fade-up">
                 <div className="auth__logo">
-                    <Landmark size={28} /> Pergamon
+                    <Landmark size={32} strokeWidth={2.5} />
+                    <span>Pergamon</span>
                 </div>
                 <h1 className="auth__title">Start Your Journey</h1>
                 <p className="auth__subtitle">Create your free account in seconds</p>
@@ -44,52 +45,64 @@ const Register = () => {
                 <form onSubmit={handleSubmit} className="auth__form">
                     <div className="form-group">
                         <label>Full Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={form.name}
-                            onChange={handleChange}
-                            placeholder="John Doe"
-                            required
-                            autoComplete="name"
-                        />
+                        <div className="input-wrapper">
+                            <UserIcon className="input-icon" size={18} />
+                            <input
+                                type="text"
+                                name="name"
+                                value={form.name}
+                                onChange={handleChange}
+                                placeholder="John Doe"
+                                required
+                                autoComplete="name"
+                            />
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Email Address</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleChange}
-                            placeholder="you@example.com"
-                            required
-                            autoComplete="email"
-                        />
+                        <div className="input-wrapper">
+                            <Mail className="input-icon" size={18} />
+                            <input
+                                type="email"
+                                name="email"
+                                value={form.email}
+                                onChange={handleChange}
+                                placeholder="you@example.com"
+                                required
+                                autoComplete="email"
+                            />
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            value={form.password}
-                            onChange={handleChange}
-                            placeholder="Min. 8 characters"
-                            required
-                            minLength={8}
-                            autoComplete="new-password"
-                        />
+                        <div className="input-wrapper">
+                            <Lock className="input-icon" size={18} />
+                            <input
+                                type="password"
+                                name="password"
+                                value={form.password}
+                                onChange={handleChange}
+                                placeholder="Min. 8 characters"
+                                required
+                                minLength={8}
+                                autoComplete="new-password"
+                            />
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Confirm Password</label>
-                        <input
-                            type="password"
-                            name="confirm"
-                            value={form.confirm}
-                            onChange={handleChange}
-                            placeholder="Repeat your password"
-                            required
-                            autoComplete="new-password"
-                        />
+                        <div className="input-wrapper">
+                            <Lock className="input-icon" size={18} />
+                            <input
+                                type="password"
+                                name="confirm"
+                                value={form.confirm}
+                                onChange={handleChange}
+                                placeholder="Repeat your password"
+                                required
+                                autoComplete="new-password"
+                            />
+                        </div>
                     </div>
                     <button type="submit" className="btn btn-primary auth__submit" disabled={loading}>
                         {loading ? "Creating account..." : "Create Account →"}
