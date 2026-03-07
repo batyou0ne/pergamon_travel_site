@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../lib/api";
+import { getImageUrl } from "../lib/imageUrl";
 import { Grid3X3, Award, Settings2, Heart, MessageCircle, Camera, MapPin } from "lucide-react";
 import EditProfileModal from "../components/EditProfileModal";
 import "./Profile.css";
@@ -157,7 +158,7 @@ const Profile = () => {
                     ) : posts.length > 0 ? (
                         posts.map(post => (
                             <div key={post.id} className="grid-item post-tn">
-                                <img src={post.imageUrl} alt={post.locationName || "Travel moment"} loading="lazy" />
+                                <img src={getImageUrl(post.imageUrl)} alt={post.locationName || "Travel moment"} loading="lazy" />
                                 <div className="post-tn__overlay">
                                     <span><Heart size={16} fill="white" /> {post.likes || 0}</span>
                                     <span><MessageCircle size={16} fill="white" /> 0</span>

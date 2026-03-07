@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../lib/api";
+import { getImageUrl } from "../lib/imageUrl";
 import { Heart, MessageCircle, MapPin, Trash2, Bookmark } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import "./Feed.css";
@@ -94,7 +95,7 @@ const PostItem = ({ post, onPostDeleted }) => {
         <article className="post card">
             <div className="post__image-wrapper">
                 {post.imageUrl ? (
-                    <img src={post.imageUrl} alt={post.locationName || "Travel post"} loading="lazy" className="post__image" />
+                    <img src={getImageUrl(post.imageUrl)} alt={post.locationName || "Travel post"} loading="lazy" className="post__image" />
                 ) : (
                     <div className="post__image" style={{ height: '300px', backgroundColor: '#e0e0e0' }} />
                 )}
