@@ -16,7 +16,9 @@ const AppError = require("./utils/AppError");
 const app = express();
 
 // ─── Security & Logging Middleware ───────────────────────────────────────────
-app.use(helmet());
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+}));
 app.use(
     cors({
         // Allow the specific Vercel URL, localhost, and any custom CLIENT_URL from Render env
