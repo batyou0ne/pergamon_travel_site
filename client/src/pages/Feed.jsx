@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import api from "../lib/api";
 import { getImageUrl } from "../lib/imageUrl";
 import { Heart, MessageCircle, MapPin, Trash2, Bookmark } from "lucide-react";
@@ -201,23 +201,75 @@ const PostItem = ({ post, onPostDeleted }) => {
 const Feed = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [error, setError] = useState("");
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const observerRef = useRef(null);
+    const loadMoreRef = useRef(null);
 
+    const fetchPosts = async (pageNum, isInitial = false) => {
+        try {
+            if (isInitial) setLoading(true);
+            else setLoadingMore(true);
+
+            const res = await api.get(`/posts?page=${pageNum}&limit=10`);
+            const newPosts = res.data.data.posts || [];
+
+            if (newPosts.length < 10) {
+                setHasMore(false);
+            }
+
+            if (isInitial) {
+                setPosts(newPosts);
+            } else {
+                setPosts(prev => [...prev, ...newPosts]);
+            }
+        } catch (err) {
+            console.error(err);
+            setError("Failed to load posts.");
+        } finally {
+            setLoading(false);
+            setLoadingMore(false);
+        }
+    };
+
+    // Initial load
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const res = await api.get("/posts");
-                setPosts(res.data.data.posts || []);
-            } catch (err) {
-                console.error(err);
-                setError("Failed to load posts.");
-            } finally {
-                setLoading(false);
+        fetchPosts(1, true);
+    }, []);
+
+    // IntersectionObserver for infinite scroll
+    useEffect(() => {
+        if (loading) return;
+
+        if (observerRef.current) {
+            observerRef.current.disconnect();
+        }
+
+        observerRef.current = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasMore && !loadingMore) {
+                    setPage(prev => {
+                        const nextPage = prev + 1;
+                        fetchPosts(nextPage);
+                        return nextPage;
+                    });
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (loadMoreRef.current) {
+            observerRef.current.observe(loadMoreRef.current);
+        }
+
+        return () => {
+            if (observerRef.current) {
+                observerRef.current.disconnect();
             }
         };
-
-        fetchPosts();
-    }, []);
+    }, [loading, hasMore, loadingMore]);
 
     if (loading) return <div className="feed-container" style={{ padding: '2rem', textAlign: 'center' }}><div className="spinner"></div></div>;
 
@@ -231,9 +283,26 @@ const Feed = () => {
                 {error ? (
                     <div style={{ textAlign: 'center', padding: '3rem 1rem', color: '#c62828' }}>{error}</div>
                 ) : posts.length > 0 ? (
-                    posts.map(post => (
-                        <PostItem key={post.id} post={post} onPostDeleted={(id) => setPosts(posts.filter(p => p.id !== id))} />
-                    ))
+                    <>
+                        {posts.map(post => (
+                            <PostItem key={post.id} post={post} onPostDeleted={(id) => setPosts(posts.filter(p => p.id !== id))} />
+                        ))}
+
+                        {/* Infinite scroll trigger */}
+                        <div ref={loadMoreRef} style={{ height: '1px', width: '100%' }} />
+
+                        {loadingMore && (
+                            <div style={{ textAlign: 'center', padding: '2rem' }}>
+                                <div className="spinner"></div>
+                            </div>
+                        )}
+
+                        {!hasMore && posts.length > 0 && (
+                            <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                                ✨ You've seen all posts!
+                            </div>
+                        )}
+                    </>
                 ) : (
                     <div style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--text-light)' }}>
                         <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📭</div>
