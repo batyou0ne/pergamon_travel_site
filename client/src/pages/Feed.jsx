@@ -12,6 +12,7 @@ const PostItem = ({ post, onPostDeleted }) => {
     const [comments, setComments] = useState([]);
     const [isSaved, setIsSaved] = useState(post.isSaved || false);
     const [loadingComments, setLoadingComments] = useState(false);
+    const [newComment, setNewComment] = useState("");
     const { user } = useAuth();
     const isAdmin = user?.role === 'ADMIN';
 
