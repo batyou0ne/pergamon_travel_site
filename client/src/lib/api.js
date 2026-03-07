@@ -25,7 +25,11 @@ api.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             localStorage.removeItem("token");
-            window.location.href = "/login";
+            // Only redirect if absolutely necessary, but for now let's just clear
+            // the token and let the app state handle it (e.g. ProtectedRoute)
+            if (window.location.pathname !== "/" && window.location.pathname !== "/explore") {
+                window.location.href = "/login";
+            }
         }
         return Promise.reject(error);
     }
