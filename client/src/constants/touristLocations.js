@@ -1,4 +1,27 @@
 export const TOURIST_LOCATIONS = [
+    // Generic Cities & Countries
+    "Paris, France", "London, United Kingdom", "New York, USA", "Rome, Italy", 
+    "Tokyo, Japan", "Istanbul, Türkiye", "Dubai, UAE", "Singapore, Singapore",
+    "Barcelona, Spain", "Amsterdam, Netherlands", "Madrid, Spain", "Prague, Czech Republic",
+    "Bangkok, Thailand", "Seoul, South Korea", "Vienna, Austria", "Berlin, Germany",
+    "Venice, Italy", "Milan, Italy", "Florence, Italy", "Athens, Greece", 
+    "Santorini, Greece", "Mykonos, Greece", "Kyoto, Japan", "Osaka, Japan",
+    "Los Angeles, USA", "San Francisco, USA", "Las Vegas, USA", "Miami, USA",
+    "Toronto, Canada", "Vancouver, Canada", "Sydney, Australia", "Melbourne, Australia",
+    "Rio de Janeiro, Brazil", "Buenos Aires, Argentina", "Cape Town, South Africa",
+    "Cairo, Egypt", "Marrakech, Morocco", "Bali, Indonesia", "Phuket, Thailand",
+    "Hanoi, Vietnam", "Ho Chi Minh City, Vietnam", "Kuala Lumpur, Malaysia",
+    "Beijing, China", "Shanghai, China", "Hong Kong, China", "Taipei, Taiwan",
+    "Munich, Germany", "Frankfurt, Germany", "Hamburg, Germany", "Zurich, Switzerland",
+    "Geneva, Switzerland", "Lucerne, Switzerland", "Stockholm, Sweden", "Copenhagen, Denmark",
+    "Oslo, Norway", "Helsinki, Finland", "Budapest, Hungary", "Warsaw, Poland",
+    "Krakow, Poland", "Lisbon, Portugal", "Porto, Portugal", "Dublin, Ireland",
+    "Edinburgh, United Kingdom", "Reykjavik, Iceland", "Dubrovnik, Croatia",
+    "Split, Croatia", "Bratislava, Slovakia", "Ljubljana, Slovenia",
+    "Antalya, Türkiye", "Izmir, Türkiye", "Cappadocia, Türkiye", "Bodrum, Türkiye",
+    "Fethiye, Türkiye", "Marmaris, Türkiye", "Ankara, Türkiye", "Bursa, Türkiye",
+
+
     "Colosseum, Rome, Italy", "Eiffel Tower, Paris, France", "Statue of Liberty, New York, USA",
     "Great Wall, Beijing, China", "Taj Mahal, Agra, India", "Machu Picchu, Cusco, Peru",
     "Christ the Redeemer, Rio de Janeiro, Brazil", "Petra, Petra, Jordan", "Angkor Wat, Siem Reap, Cambodia",
@@ -323,27 +346,4 @@ export const TOURIST_LOCATIONS = [
     "Café Sprüngli, Zurich, Switzerland", "Ristorante Bindella, Zurich, Switzerland", "Blinde Kuh, Zurich, Switzerland",
     "Markthalle, Basel, Switzerland", "Restaurant Kunsthalle, Basel, Switzerland", "Gasthof zum Goldenen Sternen, Basel, Switzerland",
     "Auberge de l’Onde, Vevey, Switzerland", "Restaurant Le Deck, Geneva, Switzerland",
-    "Chez Philippe, Geneva, Switzerland", "Restaurant Le Chat Botté, Geneva, Switzerland",
-
-    // Generic Cities & Countries
-    "Paris, France", "London, United Kingdom", "New York, USA", "Rome, Italy",
-    "Tokyo, Japan", "Istanbul, Türkiye", "Dubai, UAE", "Singapore, Singapore",
-    "Barcelona, Spain", "Amsterdam, Netherlands", "Madrid, Spain", "Prague, Czech Republic",
-    "Bangkok, Thailand", "Seoul, South Korea", "Vienna, Austria", "Berlin, Germany",
-    "Venice, Italy", "Milan, Italy", "Florence, Italy", "Athens, Greece",
-    "Santorini, Greece", "Mykonos, Greece", "Kyoto, Japan", "Osaka, Japan",
-    "Los Angeles, USA", "San Francisco, USA", "Las Vegas, USA", "Miami, USA",
-    "Toronto, Canada", "Vancouver, Canada", "Sydney, Australia", "Melbourne, Australia",
-    "Rio de Janeiro, Brazil", "Buenos Aires, Argentina", "Cape Town, South Africa",
-    "Cairo, Egypt", "Marrakech, Morocco", "Bali, Indonesia", "Phuket, Thailand",
-    "Hanoi, Vietnam", "Ho Chi Minh City, Vietnam", "Kuala Lumpur, Malaysia",
-    "Beijing, China", "Shanghai, China", "Hong Kong, China", "Taipei, Taiwan",
-    "Munich, Germany", "Frankfurt, Germany", "Hamburg, Germany", "Zurich, Switzerland",
-    "Geneva, Switzerland", "Lucerne, Switzerland", "Stockholm, Sweden", "Copenhagen, Denmark",
-    "Oslo, Norway", "Helsinki, Finland", "Budapest, Hungary", "Warsaw, Poland",
-    "Krakow, Poland", "Lisbon, Portugal", "Porto, Portugal", "Dublin, Ireland",
-    "Edinburgh, United Kingdom", "Reykjavik, Iceland", "Dubrovnik, Croatia",
-    "Split, Croatia", "Bratislava, Slovakia", "Ljubljana, Slovenia",
-    "Antalya, Türkiye", "Izmir, Türkiye", "Cappadocia, Türkiye", "Bodrum, Türkiye",
-    "Fethiye, Türkiye", "Marmaris, Türkiye", "Ankara, Türkiye", "Bursa, Türkiye"
-];
+    "Chez Philippe, Geneva, Switzerland", "Restaurant Le Chat Botté, Geneva, Switzerland"];
