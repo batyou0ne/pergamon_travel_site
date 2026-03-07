@@ -1,8 +1,7 @@
 const prisma = require("../config/prisma");
+const supabase = require("../config/supabase");
 const AppError = require("../utils/AppError");
 const { getDistanceFromLatLonInM } = require("../utils/geo");
-const fs = require("fs");
-const path = require("path");
 const crypto = require("crypto");
 
 class PostService {
@@ -17,8 +16,7 @@ class PostService {
         console.log("imageUrl starts with data:image?", String(imageUrl).startsWith("data:image"));
         console.log("imageUrl length:", String(imageUrl).length);
 
-        // Very permissive regex for data:image
-        // Example: data:image/jpeg;base64,/9j/4AAQ...
+        // Upload base64 image to Supabase Storage
         if (imageUrl.startsWith("data:image")) {
             const matches = imageUrl.match(/^data:image\/([a-zA-Z0-9-+\/]+);base64,(.+)$/);
 
@@ -29,23 +27,35 @@ class PostService {
 
             const extension = matches[1].replace("jpeg", "jpg");
             const base64Data = matches[2];
+            const mimeType = `image/${matches[1]}`;
 
             console.log(`Extracted extension: ${extension}, Base64 length: ${base64Data.length}`);
 
             const buffer = Buffer.from(base64Data, "base64");
             const fileName = `${crypto.randomUUID()}.${extension}`;
 
-            const uploadsDir = path.join(__dirname, "../../uploads");
-            if (!fs.existsSync(uploadsDir)) {
-                fs.mkdirSync(uploadsDir, { recursive: true });
+            // Upload to Supabase Storage
+            const { data: uploadData, error: uploadError } = await supabase.storage
+                .from("post-images")
+                .upload(fileName, buffer, {
+                    contentType: mimeType,
+                    upsert: false,
+                });
+
+            if (uploadError) {
+                console.error("Supabase Storage upload error:", uploadError);
+                throw new AppError("Failed to upload image to cloud storage", 500);
             }
 
-            const filePath = path.join(uploadsDir, fileName);
-            fs.writeFileSync(filePath, buffer);
-            console.log("File saved to disk:", filePath);
+            console.log("Uploaded to Supabase Storage:", uploadData.path);
 
-            // Reassign imageUrl to the new path
-            imageUrl = `/uploads/${fileName}`;
+            // Get the public URL
+            const { data: publicUrlData } = supabase.storage
+                .from("post-images")
+                .getPublicUrl(fileName);
+
+            imageUrl = publicUrlData.publicUrl;
+            console.log("Public image URL:", imageUrl);
         }
 
         console.log("Final imageUrl pointing to DB:", imageUrl);
