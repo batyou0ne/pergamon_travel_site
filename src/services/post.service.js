@@ -1,21 +1,78 @@
 const prisma = require("../config/prisma");
 const AppError = require("../utils/AppError");
 const { getDistanceFromLatLonInM } = require("../utils/geo");
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
 class PostService {
     async createPost(userId, data) {
-        const { imageUrl, caption, locationName, latitude, longitude } = data;
+        let { imageUrl, caption, locationName, latitude, longitude } = data;
 
         if (!imageUrl) {
             throw new AppError("Image is required to create a post", 400);
         }
 
+        console.log("== Incoming Post Creation ==");
+        console.log("imageUrl starts with data:image?", String(imageUrl).startsWith("data:image"));
+        console.log("imageUrl length:", String(imageUrl).length);
+
+        // Very permissive regex for data:image
+        // Example: data:image/jpeg;base64,/9j/4AAQ...
+        if (imageUrl.startsWith("data:image")) {
+            const matches = imageUrl.match(/^data:image\/([a-zA-Z0-9-+\/]+);base64,(.+)$/);
+
+            if (!matches || matches.length !== 3) {
+                console.error("Regex failed. Match output:", matches);
+                throw new AppError("Invalid image format - Regex parsing failed", 400);
+            }
+
+            const extension = matches[1].replace("jpeg", "jpg");
+            const base64Data = matches[2];
+
+            console.log(`Extracted extension: ${extension}, Base64 length: ${base64Data.length}`);
+
+            const buffer = Buffer.from(base64Data, "base64");
+            const fileName = `${crypto.randomUUID()}.${extension}`;
+
+            const uploadsDir = path.join(__dirname, "../../uploads");
+            if (!fs.existsSync(uploadsDir)) {
+                fs.mkdirSync(uploadsDir, { recursive: true });
+            }
+
+            const filePath = path.join(uploadsDir, fileName);
+            fs.writeFileSync(filePath, buffer);
+            console.log("File saved to disk:", filePath);
+
+            // Reassign imageUrl to the new path
+            imageUrl = `/uploads/${fileName}`;
+        }
+
+        console.log("Final imageUrl pointing to DB:", imageUrl);
+
+        // Remove ANY null byte from all string fields (deep clean for Postgres)
+        const sanitize = (str) => {
+            if (typeof str !== 'string') return str;
+            // Remove actual null bytes \x00, \u0000 and PostgreSQL incompatible characters
+            return str.replace(/[\x00\u0000]/g, '');
+        };
+
+        const sanitizedCaption = sanitize(caption);
+        const sanitizedLocationName = sanitize(locationName);
+        const sanitizedImageUrl = sanitize(imageUrl);
+
+        console.log("Sanitized variables:", {
+            caption: sanitizedCaption,
+            locationName: sanitizedLocationName,
+            imageUrl: sanitizedImageUrl
+        });
+
         const post = await prisma.post.create({
             data: {
                 userId,
-                imageUrl,
-                caption,
-                locationName,
+                imageUrl: sanitizedImageUrl,
+                caption: sanitizedCaption,
+                locationName: sanitizedLocationName,
                 latitude,
                 longitude,
             },

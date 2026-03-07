@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -118,7 +119,7 @@ enum TripStatus {
 model Post {
   id           Int      @id @default(autoincrement())
   userId       Int
-  imageUrl     String   @db.LongText // Using LongText for base64
+  imageUrl     String   @db.Text
   caption      String?  @db.Text
   locationName String?
   latitude     Float?

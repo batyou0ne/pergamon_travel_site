@@ -1,30 +1,19 @@
-const mariadb = require("mariadb");
+const { Client } = require('pg');
 
-async function testConnection() {
-    const config = {
-        host: "127.0.0.1",
-        port: 3306,
-        user: "root",
-        password: "12341234",
-        database: "travel_app_db",
-        connectionLimit: 5,
-    };
-
-    console.log("Creating pool with config:", config);
-    const pool = mariadb.createPool(config);
-
+const run = async () => {
+    const directUrl = "postgresql://postgres.rhwmwxioqlgolvvsltcd:dijjud-xiMsi1-hiznen@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres";
+    const client = new Client({ connectionString: directUrl, connectionTimeoutMillis: 5000 });
     try {
-        console.log("Getting connection...");
-        const conn = await pool.getConnection();
+        console.log("Connecting to", directUrl);
+        await client.connect();
         console.log("Connected successfully!");
-        const rows = await conn.query("SELECT 1 as val");
-        console.log("Query result:", rows);
-        conn.release();
+        const res = await client.query('SELECT NOW()');
+        console.log("Time is", res.rows[0]);
     } catch (err) {
-        console.error("Connection failed:", err);
+        console.error("Connection error", err);
     } finally {
-        pool.end();
+        await client.end();
     }
-}
+};
 
-testConnection();
+run();
