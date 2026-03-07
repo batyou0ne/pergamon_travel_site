@@ -1,10 +1,10 @@
 export const TOURIST_LOCATIONS = [
     // Generic Cities & Countries
-    "Paris, France", "London, United Kingdom", "New York, USA", "Rome, Italy", 
+    "Paris, France", "London, United Kingdom", "New York, USA", "Rome, Italy",
     "Tokyo, Japan", "Istanbul, Türkiye", "Dubai, UAE", "Singapore, Singapore",
     "Barcelona, Spain", "Amsterdam, Netherlands", "Madrid, Spain", "Prague, Czech Republic",
     "Bangkok, Thailand", "Seoul, South Korea", "Vienna, Austria", "Berlin, Germany",
-    "Venice, Italy", "Milan, Italy", "Florence, Italy", "Athens, Greece", 
+    "Venice, Italy", "Milan, Italy", "Florence, Italy", "Athens, Greece",
     "Santorini, Greece", "Mykonos, Greece", "Kyoto, Japan", "Osaka, Japan",
     "Los Angeles, USA", "San Francisco, USA", "Las Vegas, USA", "Miami, USA",
     "Toronto, Canada", "Vancouver, Canada", "Sydney, Australia", "Melbourne, Australia",
@@ -18,9 +18,86 @@ export const TOURIST_LOCATIONS = [
     "Krakow, Poland", "Lisbon, Portugal", "Porto, Portugal", "Dublin, Ireland",
     "Edinburgh, United Kingdom", "Reykjavik, Iceland", "Dubrovnik, Croatia",
     "Split, Croatia", "Bratislava, Slovakia", "Ljubljana, Slovenia",
+
+    // More European Cities
+    "Nice, France", "Marseille, France", "Lyon, France", "Strasbourg, France", "Bordeaux, France",
+    "Seville, Spain", "Granada, Spain", "Malaga, Spain", "Valencia, Spain", "Bilbao, Spain",
+    "San Sebastián, Spain", "Palma de Mallorca, Spain", "Ibiza, Spain", "Tenerife, Spain",
+    "Naples, Italy", "Turin, Italy", "Bologna, Italy", "Verona, Italy", "Genoa, Italy",
+    "Palermo, Italy", "Siena, Italy", "Pisa, Italy", "Amalfi, Italy", "Capri, Italy",
+    "Salzburg, Austria", "Innsbruck, Austria", "Graz, Austria",
+    "Bruges, Belgium", "Ghent, Belgium", "Antwerp, Belgium", "Brussels, Belgium",
+    "Rotterdam, Netherlands", "The Hague, Netherlands", "Utrecht, Netherlands",
+    "Dresden, Germany", "Leipzig, Germany", "Cologne, Germany", "Nuremberg, Germany",
+    "Düsseldorf, Germany", "Stuttgart, Germany", "Heidelberg, Germany",
+    "Tallinn, Estonia", "Riga, Latvia", "Vilnius, Lithuania",
+    "Bucharest, Romania", "Sofia, Bulgaria", "Belgrade, Serbia", "Zagreb, Croatia",
+    "Thessaloniki, Greece", "Rhodes, Greece", "Crete, Greece", "Corfu, Greece",
+    "Monte Carlo, Monaco", "Valletta, Malta", "Bern, Switzerland", "Basel, Switzerland",
+    "Gothenburg, Sweden", "Malmö, Sweden", "Bergen, Norway", "Tromsø, Norway",
+
+    // Türkiye Şehirleri
     "Antalya, Türkiye", "Izmir, Türkiye", "Cappadocia, Türkiye", "Bodrum, Türkiye",
     "Fethiye, Türkiye", "Marmaris, Türkiye", "Ankara, Türkiye", "Bursa, Türkiye",
+    "Trabzon, Türkiye", "Gaziantep, Türkiye", "Konya, Türkiye", "Eskişehir, Türkiye",
+    "Çanakkale, Türkiye", "Muğla, Türkiye", "Aydın, Türkiye", "Denizli, Türkiye",
+    "Şanlıurfa, Türkiye", "Adana, Türkiye", "Mersin, Türkiye", "Samsun, Türkiye",
+    "Edirne, Türkiye", "Bolu, Türkiye", "Kars, Türkiye", "Rize, Türkiye",
+    "Artvin, Türkiye", "Hatay, Türkiye", "Safranbolu, Türkiye", "Mardin, Türkiye",
+    "Nevşehir, Türkiye", "Aksaray, Türkiye", "Van, Türkiye", "Diyarbakır, Türkiye",
+    "Ağrı, Türkiye", "Pamukkale, Türkiye", "Kuşadası, Türkiye", "Çeşme, Türkiye",
+    "Alaçatı, Türkiye", "Alanya, Türkiye", "Kaş, Türkiye", "Dalaman, Türkiye",
+    "Didim, Türkiye", "Side, Türkiye", "Göreme, Türkiye", "Amasra, Türkiye",
 
+
+    // ─── Extra European Landmarks & Attractions ───
+    // France
+    "Musée d'Orsay, Paris, France", "Centre Pompidou, Paris, France", "Moulin Rouge, Paris, France",
+    "Jardin du Luxembourg, Paris, France", "Place de la Concorde, Paris, France", "Champs-Élysées, Paris, France",
+    "Pont Alexandre III, Paris, France", "Les Invalides, Paris, France", "Château de Chambord, Loire Valley, France",
+    "Château de Chenonceau, Loire Valley, France", "Lavender Fields, Provence, France", "Gorges du Verdon, Provence, France",
+    "Étretat Cliffs, Normandy, France", "D-Day Beaches, Normandy, France", "Saint-Tropez Beach, Côte d'Azur, France",
+    "Promenade des Anglais, Nice, France", "Old Port, Marseille, France", "Cité du Vin, Bordeaux, France",
+    // Italy
+    "Spanish Steps, Rome, Italy", "Piazza Navona, Rome, Italy", "Galleria Borghese, Rome, Italy",
+    "Castel Sant'Angelo, Rome, Italy", "Catacombs of Rome, Rome, Italy", "Piazzale Michelangelo, Florence, Italy",
+    "Palazzo Pitti, Florence, Italy", "Boboli Gardens, Florence, Italy", "Burano Island, Venice, Italy",
+    "Murano Island, Venice, Italy", "Torcello Island, Venice, Italy", "Positano, Amalfi Coast, Italy",
+    "Ravello, Amalfi Coast, Italy", "Blue Grotto, Capri, Italy", "Trulli Houses, Alberobello, Italy",
+    "Matera Sassi, Matera, Italy", "Valley of the Temples, Agrigento, Italy", "Taormina, Sicily, Italy",
+    "Lake Garda, Garda, Italy", "Lake Maggiore, Piedmont, Italy", "Portofino, Liguria, Italy",
+    // Spain
+    "Casa Batlló, Barcelona, Spain", "Casa Milà, Barcelona, Spain", "Gothic Quarter, Barcelona, Spain",
+    "Montserrat Monastery, Montserrat, Spain", "Mezquita, Córdoba, Spain", "Alcázar of Córdoba, Córdoba, Spain",
+    "Caminito del Rey, Málaga, Spain", "Nerja Caves, Málaga, Spain", "City of Arts and Sciences, Valencia, Spain",
+    // Germany  
+    "Berlin Wall Memorial, Berlin, Germany", "East Side Gallery, Berlin, Germany", "Museum Island, Berlin, Germany",
+    "Pergamon Museum, Berlin, Germany", "Checkpoint Charlie, Berlin, Germany", "Reichstag Building, Berlin, Germany",
+    "Nymphenburg Palace, Munich, Germany", "Englischer Garten, Munich, Germany", "Rhine Valley Castles, Rhine, Germany",
+    "Mosel Valley, Mosel, Germany", "Saxon Switzerland National Park, Saxony, Germany",
+    // Scandinavia & Nordics
+    "Northern Lights, Tromsø, Norway", "Flåm Railway, Flåm, Norway", "Trolltunga, Odda, Norway",
+    "Vigeland Sculpture Park, Oslo, Norway", "Bryggen Wharf, Bergen, Norway",
+    "Little Mermaid Statue, Copenhagen, Denmark", "Christiania, Copenhagen, Denmark",
+    "ABBA Museum, Stockholm, Sweden", "Stockholm Archipelago, Stockholm, Sweden",
+    "Suomenlinna Sea Fortress, Helsinki, Finland", "Santa Claus Village, Rovaniemi, Finland",
+    "Jökulsárlón Glacier Lagoon, Iceland", "Diamond Beach, Iceland", "Landmannalaugar, Iceland",
+    // Eastern Europe
+    "Karlov Most, Prague, Czech Republic", "Český Krumlov Castle, Český Krumlov, Czech Republic",
+    "Kutná Hora Bone Church, Kutná Hora, Czech Republic", "Széchenyi Thermal Bath, Budapest, Hungary",
+    "Ruin Bars, Budapest, Hungary", "Painted Monasteries, Bucovina, Romania", "Transylvania, Romania",
+    "Mostar Old Bridge, Mostar, Bosnia", "Kotor Old Town, Kotor, Montenegro",
+    "Sveti Stefan, Budva, Montenegro", "Bay of Kotor, Montenegro",
+    // Switzerland & Austria
+    "Lake Lucerne, Lucerne, Switzerland", "Rhine Falls, Schaffhausen, Switzerland",
+    "Interlaken, Bern, Switzerland", "Grindelwald, Bern, Switzerland", "St. Moritz, Graubünden, Switzerland",
+    "Hallstatt Lake, Hallstatt, Austria", "Grossglockner High Alpine Road, Carinthia, Austria",
+    // UK & Ireland
+    "Cotswolds Villages, Cotswolds, United Kingdom", "Bath Roman Baths, Bath, United Kingdom",
+    "Windsor Castle, Windsor, United Kingdom", "Dover White Cliffs, Dover, United Kingdom",
+    "Arthur's Seat, Edinburgh, United Kingdom", "Scottish Highlands, Scotland, United Kingdom",
+    "Isle of Skye, Scotland, United Kingdom", "Ring of Kerry, Kerry, Ireland",
+    "Galway City, Galway, Ireland", "Aran Islands, Galway, Ireland",
 
     "Colosseum, Rome, Italy", "Eiffel Tower, Paris, France", "Statue of Liberty, New York, USA",
     "Great Wall, Beijing, China", "Taj Mahal, Agra, India", "Machu Picchu, Cusco, Peru",
