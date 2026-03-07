@@ -290,7 +290,69 @@
     cursor: pointer;
 }
 
-.close-comments-btn:hover {
-    color: var(--text-primary);
-    text-decoration: underline;
+/* ── Skeleton Loading ── */
+.skeleton-post {
+    pointer-events: none;
+    height: 350px;
+    background: var(--surface-color);
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 100%;
+}
+
+.skeleton-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.skeleton-line {
+    height: 12px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skeleton-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.shimmer {
+    background: linear-gradient(90deg,
+            rgba(0, 0, 0, 0.05) 25%,
+            rgba(0, 0, 0, 0.1) 50%,
+            rgba(0, 0, 0, 0.05) 75%);
+    background-size: 200% 100%;
+    animation: shimmer-swipe 1.5s infinite linear;
+}
+
+@keyframes shimmer-swipe {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.feed__load-more {
+    text-align: center;
+    padding: 40px 0;
+    min-height: 100px;
 }

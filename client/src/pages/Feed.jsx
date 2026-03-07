@@ -5,6 +5,19 @@ import { Heart, MessageCircle, MapPin, Trash2, Bookmark } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import "./Feed.css";
 
+const PostSkeleton = () => (
+    <div className="post skeleton-post">
+        <div className="skeleton-image shimmer" />
+        <div className="skeleton-overlay">
+            <div className="skeleton-line shimmer" style={{ width: '40%' }} />
+            <div className="skeleton-actions">
+                <div className="skeleton-circle shimmer" />
+                <div className="skeleton-circle shimmer" />
+            </div>
+        </div>
+    </div>
+);
+
 const PostItem = ({ post, onPostDeleted }) => {
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(post.likes);
@@ -272,44 +285,42 @@ const Feed = () => {
         };
     }, [loading, hasMore, loadingMore]);
 
-    if (loading) return <div className="feed-container" style={{ padding: '2rem', textAlign: 'center' }}><div className="spinner"></div></div>;
-
     return (
         <div className="feed-container">
             <div className="feed__header">
                 <h1 className="text-h1">Explore the World</h1>
             </div>
 
+            {/* Posts Grid */}
             <div className="feed__posts">
-                {error ? (
-                    <div style={{ textAlign: 'center', padding: '3rem 1rem', color: '#c62828' }}>{error}</div>
+                {loading && posts.length === 0 ? (
+                    // Show skeletons for initial load
+                    Array(6).fill(0).map((_, i) => <PostSkeleton key={i} />)
                 ) : posts.length > 0 ? (
-                    <>
-                        {posts.map(post => (
-                            <PostItem key={post.id} post={post} onPostDeleted={(id) => setPosts(posts.filter(p => p.id !== id))} />
-                        ))}
-
-                        {/* Infinite scroll trigger */}
-                        <div ref={loadMoreRef} style={{ height: '1px', width: '100%' }} />
-
-                        {loadingMore && (
-                            <div style={{ textAlign: 'center', padding: '2rem' }}>
-                                <div className="spinner"></div>
-                            </div>
-                        )}
-
-                        {!hasMore && posts.length > 0 && (
-                            <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                                ✨ You've seen all posts!
-                            </div>
-                        )}
-                    </>
-                ) : (
+                    posts.map(post => (
+                        <PostItem
+                            key={post.id}
+                            post={post}
+                            onPostDeleted={(id) => setPosts(prev => prev.filter(p => p.id !== id))}
+                        />
+                    ))
+                ) : !loading && (
                     <div style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--text-light)' }}>
                         <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📭</div>
                         <h2 className="text-h2">No Posts Yet</h2>
                         <p>Be the first to share an adventure!</p>
                     </div>
+                )}
+            </div>
+
+            {/* Error Message */}
+            {error && <div className="feed__error" style={{ textAlign: 'center', color: '#dc2626', padding: '1rem' }}>{error}</div>}
+
+            {/* Infinite Scroll Trigger & Loading More Indicator */}
+            <div ref={loadMoreRef} className="feed__load-more">
+                {loadingMore && <div className="spinner"></div>}
+                {!hasMore && posts.length > 0 && (
+                    <p className="text-secondary text-sm">✨ You've seen all posts!</p>
                 )}
             </div>
         </div>

@@ -132,6 +132,7 @@ model Post {
   comments     Comment[]
   savedBy      SavedPost[]
 
+  @@index([createdAt])
   @@map("posts")
 }
 
