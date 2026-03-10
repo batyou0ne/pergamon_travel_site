@@ -19,8 +19,8 @@ const PostSkeleton = () => (
 );
 
 const PostItem = ({ post, onPostDeleted }) => {
-    const [liked, setLiked] = useState(false);
-    const [likesCount, setLikesCount] = useState(post.likes);
+    const [liked, setLiked] = useState(post.isLiked || false);
+    const [likesCount, setLikesCount] = useState(post.likes || 0);
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState([]);
     const [isSaved, setIsSaved] = useState(post.isSaved || false);
@@ -51,9 +51,23 @@ const PostItem = ({ post, onPostDeleted }) => {
         }
     };
 
-    const handleLike = () => {
+    const handleLike = async () => {
+        const previousLiked = liked;
+        const previousCount = likesCount;
+
+        // Optimistic UI
         setLiked(!liked);
         setLikesCount(liked ? likesCount - 1 : likesCount + 1);
+
+        try {
+            const res = await api.post(`/posts/${post.id}/like`);
+            setLiked(res.data.data.liked);
+            setLikesCount(res.data.data.likesCount);
+        } catch (err) {
+            console.error("Failed to toggle like", err);
+            setLiked(previousLiked);
+            setLikesCount(previousCount);
+        }
     };
 
     const handleSave = async () => {
@@ -169,7 +183,7 @@ const PostItem = ({ post, onPostDeleted }) => {
                 <div className="post__comments-dropdown">
                     <div className="post__comments-list">
                         {loadingComments ? (
-                            <div className="post__comments-loading">Loading comments...</div>
+                            <div className="post__comments-loading"></div>
                         ) : (
                             <>
                                 {comments.length > 0 ? (

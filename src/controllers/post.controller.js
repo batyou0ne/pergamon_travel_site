@@ -93,6 +93,20 @@ const toggleSavePost = catchAsync(async (req, res) => {
     sendSuccess(res, 200, result, "Post saved status toggled");
 });
 
+/**
+ * @desc    Toggle like post
+ * @route   POST /api/posts/:id/like
+ * @access  Private
+ */
+const toggleLikePost = catchAsync(async (req, res) => {
+    const userId = req.user.id;
+    const postId = parseInt(req.params.id);
+
+    const result = await postService.toggleLikePost(postId, userId);
+
+    sendSuccess(res, 200, result, "Post like status toggled");
+});
+
 module.exports = {
     createPost,
     verifyLocation,
@@ -100,4 +114,5 @@ module.exports = {
     getUserPosts,
     deletePost,
     toggleSavePost,
+    toggleLikePost,
 };

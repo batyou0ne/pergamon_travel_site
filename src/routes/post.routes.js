@@ -14,6 +14,7 @@ router.use(protect);
 router.post("/", postController.createPost);
 router.post("/verify-location", postController.verifyLocation);
 router.post("/:id/save", postController.toggleSavePost);
+router.post("/:id/like", postController.toggleLikePost);
 router.delete("/:id", postController.deletePost);
 
 module.exports = router;

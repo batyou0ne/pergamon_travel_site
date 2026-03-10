@@ -157,25 +157,23 @@ class PostService {
                         avatar: true,
                     },
                 },
+                postLikes: {
+                    where: { userId: userId || -1 },
+                    select: { id: true }
+                },
+                savedBy: {
+                    where: { userId: userId || -1 },
+                    select: { id: true }
+                }
             },
         });
 
-        if (!userId) {
-            return posts.map(post => ({ ...post, isSaved: false }));
-        }
-
-        const savedPosts = await prisma.savedPost.findMany({
-            where: {
-                userId,
-                postId: { in: posts.map(p => p.id) }
-            }
+        return posts.map(post => {
+            const isLiked = post.postLikes?.length > 0;
+            const isSaved = post.savedBy?.length > 0;
+            const { postLikes, savedBy, ...rest } = post;
+            return { ...rest, isLiked, isSaved };
         });
-        const savedPostIds = new Set(savedPosts.map(sp => sp.postId));
-
-        return posts.map(post => ({
-            ...post,
-            isSaved: savedPostIds.has(post.id)
-        }));
     }
 
     async getUserPosts(userId) {
@@ -228,6 +226,37 @@ class PostService {
                 data: { userId, postId }
             });
             return { saved: true };
+        }
+    }
+
+    async toggleLikePost(postId, userId) {
+        const post = await prisma.post.findUnique({ where: { id: postId } });
+        if (!post) throw new AppError("Post not found", 404);
+
+        const existingLike = await prisma.postLike.findUnique({
+            where: { userId_postId: { userId, postId } }
+        });
+
+        if (existingLike) {
+            // Unlike: delete record and decrement count
+            const [_, updatedPost] = await prisma.$transaction([
+                prisma.postLike.delete({ where: { id: existingLike.id } }),
+                prisma.post.update({
+                    where: { id: postId },
+                    data: { likes: { decrement: 1 } }
+                })
+            ]);
+            return { liked: false, likesCount: updatedPost.likes };
+        } else {
+            // Like: create record and increment count
+            const [_, updatedPost] = await prisma.$transaction([
+                prisma.postLike.create({ data: { userId, postId } }),
+                prisma.post.update({
+                    where: { id: postId },
+                    data: { likes: { increment: 1 } }
+                })
+            ]);
+            return { liked: true, likesCount: updatedPost.likes };
         }
     }
 }
