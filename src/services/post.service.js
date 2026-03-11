@@ -164,6 +164,9 @@ class PostService {
                 savedBy: {
                     where: { userId: userId || -1 },
                     select: { id: true }
+                },
+                _count: {
+                    select: { comments: true }
                 }
             },
         });
@@ -171,8 +174,9 @@ class PostService {
         return posts.map(post => {
             const isLiked = post.postLikes?.length > 0;
             const isSaved = post.savedBy?.length > 0;
-            const { postLikes, savedBy, ...rest } = post;
-            return { ...rest, isLiked, isSaved };
+            const commentCount = post._count?.comments || 0;
+            const { postLikes, savedBy, _count, ...rest } = post;
+            return { ...rest, isLiked, isSaved, commentCount };
         });
     }
 
@@ -180,8 +184,17 @@ class PostService {
         const posts = await prisma.post.findMany({
             where: { userId },
             orderBy: { createdAt: "desc" },
+            include: {
+                _count: {
+                    select: { comments: true }
+                }
+            }
         });
-        return posts;
+        return posts.map(post => {
+            const commentCount = post._count?.comments || 0;
+            const { _count, ...rest } = post;
+            return { ...rest, commentCount };
+        });
     }
 
     async deletePost(postId, userId) {
@@ -238,7 +251,7 @@ class PostService {
         });
 
         if (existingLike) {
-            // Unlike: delete record and decrement count
+            // Unlike
             const [_, updatedPost] = await prisma.$transaction([
                 prisma.postLike.delete({ where: { id: existingLike.id } }),
                 prisma.post.update({
@@ -248,7 +261,7 @@ class PostService {
             ]);
             return { liked: false, likesCount: updatedPost.likes };
         } else {
-            // Like: create record and increment count
+            // Like
             const [_, updatedPost] = await prisma.$transaction([
                 prisma.postLike.create({ data: { userId, postId } }),
                 prisma.post.update({

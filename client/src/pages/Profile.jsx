@@ -161,7 +161,7 @@ const Profile = () => {
                                 <img src={getImageUrl(post.imageUrl)} alt={post.locationName || "Travel moment"} loading="lazy" />
                                 <div className="post-tn__overlay">
                                     <span><Heart size={16} fill="white" /> {post.likes || 0}</span>
-                                    <span><MessageCircle size={16} fill="white" /> 0</span>
+                                    <span><MessageCircle size={16} fill="white" /> {post.commentCount || 0}</span>
                                 </div>
                             </div>
                         ))

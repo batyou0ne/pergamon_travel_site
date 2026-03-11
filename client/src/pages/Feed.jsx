@@ -167,6 +167,7 @@ const PostItem = ({ post, onPostDeleted }) => {
                             </button>
                             <button className="post__action-btn" onClick={toggleComments}>
                                 <MessageCircle size={24} stroke={"white"} fill="rgba(0,0,0,0.3)" />
+                                <span>{post.commentCount || 0}</span>
                             </button>
                             {isAdmin && (
                                 <button className="post__action-btn" onClick={handleDeletePost} style={{ marginLeft: 'auto' }}>
