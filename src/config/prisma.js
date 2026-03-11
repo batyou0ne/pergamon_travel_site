@@ -9,9 +9,7 @@ const prisma = new PrismaClient({
   },
 });
 
-// Eagerly connect to avoid cold-start latency on first request
-prisma.$connect()
-  .then(() => console.log("🔌 Prisma connection pool initialized"))
-  .catch((err) => console.error("❌ Prisma connection error:", err));
-
+// The explicit connection and logging should be handled in server.js,
+// as indicated by the instruction "add more detailed logging in server.js".
+// This file should only export the PrismaClient instance.
 module.exports = prisma;
