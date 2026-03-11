@@ -146,9 +146,10 @@ class PostService {
         const posts = await prisma.post.findMany({
             skip,
             take: limit,
-            orderBy: {
-                createdAt: "desc",
-            },
+            orderBy: [
+                { createdAt: "desc" },
+                { id: "desc" }
+            ],
             include: {
                 user: {
                     select: {
@@ -183,7 +184,10 @@ class PostService {
     async getUserPosts(userId) {
         const posts = await prisma.post.findMany({
             where: { userId },
-            orderBy: { createdAt: "desc" },
+            orderBy: [
+                { createdAt: "desc" },
+                { id: "desc" }
+            ],
             include: {
                 _count: {
                     select: { comments: true }
