@@ -234,8 +234,21 @@ const Feed = () => {
     const [error, setError] = useState("");
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const [columnCount, setColumnCount] = useState(3);
     const observerRef = useRef(null);
     const loadMoreRef = useRef(null);
+
+    // Dynamic column count for layout
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 600) setColumnCount(1);
+            else if (window.innerWidth <= 1024) setColumnCount(2);
+            else setColumnCount(3);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const fetchPosts = async (pageNum, isInitial = false) => {
         try {
@@ -306,18 +319,23 @@ const Feed = () => {
                 <h1 className="text-h1">Explore the World</h1>
             </div>
 
-            {/* Posts Grid */}
+            {/* Posts Grid - Distributed into columns for row-wise masonry order */}
             <div className="feed__posts">
                 {loading && posts.length === 0 ? (
-                    // Show skeletons for initial load
                     Array(6).fill(0).map((_, i) => <PostSkeleton key={i} />)
                 ) : posts.length > 0 ? (
-                    posts.map(post => (
-                        <PostItem
-                            key={post.id}
-                            post={post}
-                            onPostDeleted={(id) => setPosts(prev => prev.filter(p => p.id !== id))}
-                        />
+                    Array.from({ length: columnCount }).map((_, colIndex) => (
+                        <div key={colIndex} className="feed__column">
+                            {posts
+                                .filter((_, index) => index % columnCount === colIndex)
+                                .map(post => (
+                                    <PostItem
+                                        key={post.id}
+                                        post={post}
+                                        onPostDeleted={(id) => setPosts(prev => prev.filter(p => p.id !== id))}
+                                    />
+                                ))}
+                        </div>
                     ))
                 ) : !loading && (
                     <div style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--text-light)' }}>

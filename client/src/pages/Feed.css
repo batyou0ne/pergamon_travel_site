@@ -10,21 +10,23 @@
     align-items: center;
 }
 
-/* Masonry Grid */
+/* Masonry Grid Fix: Multi-column Flexbox */
 .feed__posts {
-    column-count: 3;
-    column-gap: 24px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
 }
 
-@media (max-width: 1024px) {
-    .feed__posts {
-        column-count: 2;
-    }
+.feed__column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 @media (max-width: 600px) {
     .feed__posts {
-        column-count: 1;
+        flex-direction: column;
     }
 }
 
