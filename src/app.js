@@ -68,7 +68,7 @@ app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
-app.all("/{*path}", (req, res, next) => {
+app.all("*", (req, res, next) => {
     next(new AppError(`Cannot find ${req.originalUrl} on this server.`, 404));
 });
 
